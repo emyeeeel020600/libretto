@@ -1,33 +1,30 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <h1 class="mb-4">Authors</h1>
+@section('title', 'Authors')
 
-    <div class="row">
-        @foreach ($authors as $author)
-            <div class="col-md-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <h2 class="card-title">{{ $author->name }}</h2>
-                        <h5 class="card-subtitle mb-3 text-muted">Books:</h5>
-                        @if ($author->books->isEmpty())
-                            <p class="text-muted">No books found.</p>
-                        @else
-                            <ul class="list-group list-group-flush">
-                                @foreach ($author->books as $book)
-                                    <li class="list-group-item px-0">
-                                        <a href="{{ route('books.show', $book) }}">
-                                            {{ $book->title }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
+@section('create-button')
+    <a href="{{ route('authors.create') }}" class="btn btn-primary shadow-sm">+ Add New Author</a>
+@endsection
+
+@section('content')
+    @if ($authors->isEmpty())
+        <p class="text-muted">No authors available.</p>
+    @else
+        <div class="row g-4">
+            @foreach ($authors as $author)
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-3 p-4">
+                        <h4 class="card-title mb-1 fw-bold">
+                            <a href="{{ route('authors.show', $author) }}" class="text-decoration-none text-dark">
+                                {{ $author->name }}
+                            </a>
+                        </h4>
+                        <p class="text-muted small mb-0">
+                            {{ $author->books->count() }} book{{ $author->books->count() === 1 ? '' : 's' }}
+                        </p>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
-</div>
+            @endforeach
+        </div>
+    @endif
 @endsection

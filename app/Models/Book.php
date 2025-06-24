@@ -25,4 +25,16 @@ class Book extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    // Accessor to get average rating dynamically
+    public function getAverageRatingAttribute()
+    {
+        return round($this->reviews()->avg('rating'), 1) ?? 0;
+    }
+
+    // Accessor to get total ratings count dynamically
+    public function getRatingsCountAttribute()
+    {
+        return $this->reviews()->count();
+    }
 }
