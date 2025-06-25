@@ -2,10 +2,6 @@
 
 @section('title', 'Edit Author')
 
-@section('create-button')
-    <a href="{{ route('authors.index') }}" class="btn btn-outline-primary btn-sm">&larr; Back to Authors</a>
-@endsection
-
 @section('content')
 <div class="container py-4">
     <form action="{{ route('authors.update', $author) }}" method="POST" novalidate>
@@ -21,7 +17,10 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Update Author</button>
+        <div class="d-flex gap-2">
+            <a href="{{ route('authors.show', $author) }}" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-warning">Update Author</button>
+        </div>
     </form>
 </div>
 @endsection

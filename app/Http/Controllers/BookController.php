@@ -12,9 +12,10 @@ class BookController extends Controller
     // Show all books
     public function index()
     {
-        $books = Book::with('author', 'genres')->get();
+        $books = Book::with(['author', 'genres', 'reviews'])->orderBy('title')->paginate(9);
         return view('books.index', compact('books'));
     }
+
 
     // Show the create form
     public function create()

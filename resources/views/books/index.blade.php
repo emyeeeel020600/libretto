@@ -15,30 +15,26 @@
         <div class="row g-4">
             @foreach ($books as $book)
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0 rounded-3 transition-hover p-4">
-                        {{-- Title --}}
+                    <div 
+                        class="card h-100 shadow-sm border-0 rounded-3 transition-hover p-4" 
+                        style="cursor: pointer;" 
+                        onclick="window.location='{{ route('books.show', $book) }}'">
                         <h4 class="card-title mb-1 fst-italic fw-normal">
-                            <a href="{{ route('books.show', $book) }}" class="text-decoration-none text-dark">
-                                {{ $book->title }}
-                            </a>
+                            {{ $book->title }}
                         </h4>
 
-                        {{-- Optional Subtitle / tagline --}}
                         @if(!empty($book->subtitle))
                             <p class="text-secondary fst-italic mb-2">{{ $book->subtitle }}</p>
                         @endif
 
-                        {{-- Author --}}
                         <p class="mb-3 text-muted small">
                             by 
-                            <a href="{{ route('authors.show', $book->author) }}" class="link-primary fw-semibold">
+                            <a href="{{ route('authors.show', $book->author) }}" class="link-primary fw-semibold" onclick="event.stopPropagation();">
                                 {{ $book->author->name }}
                             </a>
                         </p>
 
-                        {{-- Ratings and stats --}}
                         <div class="d-flex align-items-center mb-3">
-                            {{-- Stars --}}
                             <div class="me-2" title="{{ $book->average_rating }} average rating">
                                 @php
                                     $fullStars = floor($book->average_rating);
@@ -56,13 +52,11 @@
                                 @endfor
                             </div>
 
-                            {{-- Numeric rating and count --}}
                             <small class="text-muted me-3">
                                 {{ number_format($book->average_rating, 1) }} ({{ number_format($book->ratings_count) }} ratings)
                             </small>
                         </div>
 
-                        {{-- Genres badges --}}
                         <div>
                             @foreach ($book->genres as $genre)
                                 <span class="badge bg-secondary me-1 mb-1">{{ $genre->name }}</span>
@@ -72,9 +66,12 @@
                 </div>
             @endforeach
         </div>
+
+        <div class="mt-4">
+            {{ $books->links() }}
+        </div>
     @endif
 
-    {{-- Bootstrap Icons CDN for star icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
     <style>

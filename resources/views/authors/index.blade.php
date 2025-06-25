@@ -13,18 +13,38 @@
         <div class="row g-4">
             @foreach ($authors as $author)
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0 rounded-3 p-4">
+                    <div 
+                        class="card h-100 shadow-sm border-0 rounded-3 p-4 transition-hover" 
+                        style="cursor: pointer;" 
+                        onclick="window.location='{{ route('authors.show', $author) }}'">
                         <h4 class="card-title mb-1 fw-bold">
-                            <a href="{{ route('authors.show', $author) }}" class="text-decoration-none text-dark">
+                            <a href="{{ route('authors.show', $author) }}" 
+                               class="text-decoration-none text-dark"
+                               onclick="event.stopPropagation();">
                                 {{ $author->name }}
                             </a>
                         </h4>
                         <p class="text-muted small mb-0">
-                            {{ $author->books->count() }} book{{ $author->books->count() === 1 ? '' : 's' }}
+                            {{ $author->books_count ?? $author->books->count() }} book{{ ($author->books_count ?? $author->books->count()) === 1 ? '' : 's' }}
                         </p>
                     </div>
                 </div>
             @endforeach
         </div>
+
+        <div class="mt-4">
+            {{ $authors->links() }}
+        </div>
     @endif
+
+    <style>
+        .transition-hover {
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        .transition-hover:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+    </style>
 @endsection

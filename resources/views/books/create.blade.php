@@ -2,14 +2,9 @@
 
 @section('title', 'Add New Book')
 
-@section('create-button')
-    <a href="{{ route('books.index') }}" class="btn btn-outline-primary btn-sm">
-        &larr; Back to Books
-    </a>
-@endsection
-
 @section('content')
 <div class="container py-4">
+    <h2 class="fw-bold mb-4">Book Details</h2>
     <form action="{{ route('books.store') }}" method="POST" novalidate>
         @csrf
 
@@ -70,7 +65,10 @@
         </div>
 
         {{-- Submit --}}
-        <button type="submit" class="btn btn-primary">Create Book</button>
+        <div class="d-flex gap-2">
+            <a href="{{ route('books.index') }}" class="btn btn-outline-secondary">Back to Books</a>
+            <button type="submit" class="btn btn-primary">Create Book</button>
+        </div>
     </form>
 </div>
 @endsection

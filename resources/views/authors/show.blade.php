@@ -19,9 +19,7 @@
 
 @section('content')
 <div class="container py-4">
-    <h2 class="fw-bold mb-4">{{ $author->name }}</h2>
-
-    <h4 class="mb-3">Books</h4>
+    <h2 class="fw-bold mb-4">Books by <span class="fst-italic">"{{ $author->name }}"</span></h2>
 
     @if ($author->books->isEmpty())
         <p class="text-muted fst-italic">No books written yet.</p>

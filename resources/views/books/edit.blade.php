@@ -4,14 +4,9 @@
 
 @section('create-button')
     <div class="d-flex gap-2">
-        <a href="{{ route('books.index') }}" class="btn btn-outline-primary btn-sm">
-            &larr; Back to Books
+        <a href="{{ route('books.show', $book) }}" class="btn btn-outline-primary btn-sm">
+            &larr; Back to Book
         </a>
-
-        {{-- Delete Button Trigger --}}
-        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
-            Delete
-        </button>
     </div>
 @endsection
 
@@ -84,7 +79,10 @@
         </div>
 
         {{-- Submit --}}
-        <button type="submit" class="btn btn-primary">Update Book</button>
+        <div class="d-flex gap-2">
+            <a href="{{ route('books.show', $book) }}" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-warning">Update Book</button>
+        </div>
     </form>
 </div>
 

@@ -11,9 +11,10 @@ class ReviewController extends Controller
     // Display a list of all reviews
     public function index()
     {
-        $reviews = Review::with('book')->latest()->get();
+        $reviews = Review::with('book')->latest()->paginate(9);
         return view('reviews.index', compact('reviews'));
     }
+
 
     // Show the form to create a new review
     public function create()

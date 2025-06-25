@@ -2,12 +2,9 @@
 
 @section('title', 'Add New Author')
 
-@section('create-button')
-    <a href="{{ route('authors.index') }}" class="btn btn-outline-primary btn-sm">&larr; Back to Authors</a>
-@endsection
-
 @section('content')
 <div class="container py-4">
+    <h2 class="fw-bold mb-4">Author Details</h2>
     <form action="{{ route('authors.store') }}" method="POST" novalidate>
         @csrf
 
@@ -20,7 +17,10 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Create Author</button>
+        <div class="d-flex gap-2">
+            <a href="{{ route('authors.index') }}" class="btn btn-outline-secondary">Back to Authors</a>
+            <button type="submit" class="btn btn-primary">Create Author</button>
+        </div>
     </form>
 </div>
 @endsection

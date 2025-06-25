@@ -1,28 +1,52 @@
 @extends('layouts.app')
 
+@section('title', 'Edit Review')
+
 @section('content')
-    <h1>Edit Review</h1>
+<div class="container py-4">
+    <h2 class="fw-bold mb-4">Review Details</h2>
 
     <form method="POST" action="{{ route('reviews.update', $review) }}">
         @csrf
         @method('PUT')
 
-        <label for="book_id">Book:</label>
-        <select name="book_id" required>
-            @foreach($books as $book)
-                <option value="{{ $book->id }}" {{ $book->id == $review->book_id ? 'selected' : '' }}>
-                    {{ $book->title }}
-                </option>
-            @endforeach
-        </select><br><br>
+        <div class="mb-3">
+            <label for="book_id" class="form-label">Book</label>
+            <select name="book_id" id="book_id" class="form-select @error('book_id') is-invalid @enderror" required>
+                @foreach($books as $book)
+                    <option value="{{ $book->id }}" {{ (old('book_id', $review->book_id) == $book->id) ? 'selected' : '' }}>
+                        {{ $book->title }}
+                    </option>
+                @endforeach
+            </select>
+            @error('book_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <label for="rating">Rating (1-5):</label>
-        <input type="number" name="rating" min="1" max="5" value="{{ $review->rating }}" required><br><br>
+        <div class="mb-3">
+            <label for="rating" class="form-label">Rating (1-5)</label>
+            <input type="number" name="rating" id="rating" min="1" max="5" 
+                   class="form-control @error('rating') is-invalid @enderror" 
+                   value="{{ old('rating', $review->rating) }}" required>
+            @error('rating')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <label for="content">Review:</label><br>
-        <textarea name="content" rows="5" required>{{ $review->content }}</textarea><br><br>
+        <div class="mb-4">
+            <label for="content" class="form-label">Review</label>
+            <textarea name="content" id="content" rows="5" 
+                      class="form-control @error('content') is-invalid @enderror" required>{{ old('content', $review->content) }}</textarea>
+            @error('content')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <button type="submit">Update</button>
+        <div class="d-flex gap-2">
+            <a href="{{ route('reviews.show', $review) }}" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-warning">Update Review</button>
+        </div>
     </form>
-    <a href="{{ route('reviews.index') }}">Back</a>
+</div>
 @endsection
