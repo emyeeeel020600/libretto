@@ -85,15 +85,16 @@
 
     {{-- Top Navbar --}}
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('authors.index') }}">📚 Libretto</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('authors.index') }}">📚 Libretto</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            @auth
+                <ul class="navbar-nav me-auto align-items-lg-center">
                     <li class="nav-item">
                         <a href="{{ route('books.index') }}" class="nav-link {{ request()->routeIs('books.*') ? 'active' : '' }}">
                             Books
@@ -115,9 +116,35 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <span class="nav-link">Hello, {{ auth()->user()->name }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-link nav-link" style="cursor:pointer;">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            @else
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('register') }}" class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}">
+                            Register
+                        </a>
+                    </li>
+                </ul>
+            @endauth
         </div>
-    </nav>
+    </div>
+</nav>
 
     {{-- Dashboard Layout --}}
     <div class="dashboard-wrapper">
